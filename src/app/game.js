@@ -82,14 +82,13 @@ export class Game {
                 
                 // If it is unselected
                 } else if (blockClicked.selected === true) {
-                    console.log(2);
                     // Remove the unselected block from the selected blocks array
                     const unselectedBlock = this.selected.find( block => blockClicked.column === block.column &&
                         blockClicked.row === block.row );
                     unselectedBlock.selected = false;
                     const index = this.selected.indexOf(unselectedBlock);
                     this.selected.splice(index, 1);
-                    // and if it was the last block in the selected blocks array are all blocks in the game available
+                    // and if it was the last block in the selected blocks array do all blocks in the game available
                     if (this.selected.length === 0) {
                         this.blocks.forEach (block => block.available = true);
                     }
@@ -102,7 +101,7 @@ export class Game {
                 this.blocks.forEach( block => block.available = true);
                 
                 if (!this.#isAnyMatchLeft()) {
-                    
+                    // TO DO
                 }
 
                 // If the first and second blocks sum the third one
@@ -193,6 +192,7 @@ export class Game {
     }
 
     #isAnyMatchLeft() {
+        // TO DO
         return true;
     }
 

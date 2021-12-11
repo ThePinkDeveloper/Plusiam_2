@@ -17,6 +17,13 @@ function runGame() {
     mycanvas.width = 412;
     mycanvas.height = 780;
     
+      /*
+      * This piece of code is commented during develop process, it toggles fullscreen mode
+      * and avoid to auto-rotate the screen when the game is played in an smartphone and
+      * fullscreen mode is on
+      *
+      */
+
         // boton.addEventListener('click', () => {
         //     let doc = document;
         //     if (document.fullscreenEnabled) {
