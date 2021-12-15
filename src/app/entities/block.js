@@ -26,8 +26,8 @@ export class Block {
     }
 
     update(deltaTime) {
-        if (this.y > this.game.ctx.canvas.height - this.height * ( this.TOTAL_ROWS - this.row - 2)) {
-            this.y = this.game.ctx.canvas.height - this.height * ( this.TOTAL_ROWS - this.row - 2);
+        if (this.y > this.game.ctx.canvas.height - this.height * ( this.TOTAL_ROWS - this.row - 2) - 11) {
+            this.y = this.game.ctx.canvas.height - this.height * ( this.TOTAL_ROWS - this.row - 2) - 11;
             this.speedY = 0;
             this.isStopped = true;
         }

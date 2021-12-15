@@ -1,4 +1,5 @@
 import { Block } from './entities/block.js';
+import { Panel } from './entities/panel.js';
 
 export class Game {
     
@@ -13,6 +14,8 @@ export class Game {
 
     // Initialize game
     constructor(ctx) {
+        // Creates the panel where the game fits
+        this.panel = this.#createPanel();
         // Nothing has been clicked
         this.clickedX = -1;
         this.clickedY = -1;
@@ -172,6 +175,8 @@ export class Game {
 
     draw() {
         this.blocks.forEach( block => block.draw());
+        this.panel.draw();
+
     }
 
     #fillGame(totalColumns, totalRows) {
@@ -190,10 +195,14 @@ export class Game {
     #createBlock(column, row) {
         return new Block(this, column, row);
     }
-
+    
     #isAnyMatchLeft() {
         // TO DO
         return true;
+    }
+
+    #createPanel() {
+        return new Panel(this);
     }
 
 }
