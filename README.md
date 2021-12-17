@@ -25,3 +25,6 @@ Esto abrirá el navegador predeterminado y ejecutará el juego (prototipo).
 - Mejorar la mecánica. Actualmente la mecánica del juego basada en clics no me termina de convencer. La mecánica original de seleccionar  tres piezas consecutivas sin levantar el dedo me gusta más. (2 semanas) Debido a la complejidad que estaba generando el arrastrar el dedo sobre la versión móvil se propone este punto como mejora.
 - Añadir Hall of Fame en back (La puntuación se almacena en un VPS ó Heroku) (2 Semanas)
 - Añadir Hall of Fame en front (El jugador compite contra su mejor puntación almacenada en LocalStorage) (1 Semana)
+
+# PUNTOS TERMINADOS
+- Se calculan las combinaciones restantes después de que el jugador complete un match.
