@@ -23,6 +23,8 @@ export class Game {
         this.ctx = ctx;
         // Fill the game with blocks
         this.blocks = this.#fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS );
+        this.availableMatches = this.#getAvailableMatches();
+        console.log(this.availableMatches);
         // Add a 'click' event listener to canvas that controls if any block has been clicked
         // When the player clicks inside the canvas you get x and y coords relative to the canvas context
         this.ctx.canvas.addEventListener('click', $event => {
@@ -59,7 +61,6 @@ export class Game {
             if (!!blockClicked) {
                 if (blockClicked.selected === false && blockClicked.available) {
                     blockClicked.selected = true;
-                    console.log(1);
                     this.blocks.forEach( block => block.available = false );
 
                     // It paints for availability all available blocks to be clicked
@@ -102,10 +103,6 @@ export class Game {
             if (this.selected.length === this.MAX_BLOCK_SELECTED) {
 
                 this.blocks.forEach( block => block.available = true);
-                
-                if (!this.#isAnyMatchLeft()) {
-                    // TO DO
-                }
 
                 // If the first and second blocks sum the third one
                 if (this.selected[this.FIRST].value + this.selected[this.SECOND].value == this.selected[this.THIRD].value) {
@@ -162,9 +159,16 @@ export class Game {
 
                 }
 
+                if (!this.#isAnyMatchLeft()) {
+                    this.blocks = this.#fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS);
+                }
+                
+                console.log(this.availableMatches);
                 // After choosing three blocks the array of selected blocks is emptied
                 this.selected.forEach( block => block.selected = false );
                 this.selected = [];
+
+
             }
             
         }
@@ -196,9 +200,127 @@ export class Game {
         return new Block(this, column, row);
     }
     
+    #getAvailableMatches() {
+
+        let availableMatches = 0;
+
+        this.blocks.forEach (block => {
+
+            let first = block.value;
+            let second = 0;
+            let result = 0;
+
+            //   |
+            //   |
+            //   o
+            if (block.row > 1) {
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row - 1).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column && resultBlock.row === block.row - 2).value;
+                availableMatches += this.#checkSum(first, second, result);
+            }
+            
+            //  _  
+            //   |
+            //   o
+            //
+            // |
+            //  -o
+            if (block.row > 0 && block.column > 0) {
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row - 1).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column - 1 && resultBlock.row === block.row - 1).value;
+                availableMatches += this.#checkSum(first, second, result);
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column - 1 && secondBlock.row === block.row).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column - 1 && resultBlock.row === block.row - 1).value;
+                availableMatches += this.#checkSum(first, second, result);
+            }
+
+            // 
+            //  --o
+            //
+            if (block.column > 1) {
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column - 1 && secondBlock.row === block.row).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column - 2 && resultBlock.row === block.row).value;
+                availableMatches += this.#checkSum(first, second, result);
+            }
+
+            //
+            //   -o
+            //  |
+            //  
+            //    o
+            //   _|
+            if (block.column > 0 && block.row < this.TOTAL_ROWS - 1) {
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column - 1 && secondBlock.row === block.row).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column - 1 && resultBlock.row === block.row + 1).value;
+                availableMatches += this.#checkSum(first, second, result);
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row + 1).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column - 1 && resultBlock.row === block.row + 1).value;
+                availableMatches += this.#checkSum(first, second, result);
+            }
+
+            //    o 
+            //    |
+            //    |
+            if (block.row < this.TOTAL_ROWS - 2) {
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row + 1).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column && resultBlock.row === block.row + 2).value;
+                availableMatches += this.#checkSum(first, second, result);
+            }
+
+            // 
+            //    o
+            //    |_
+            // 
+            //    o-
+            //      |
+            if (block.column < this.TOTAL_COLUMNS - 1 && block.row < this.TOTAL_ROWS - 1) {
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row + 1).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column + 1 && resultBlock.row === block.row + 1).value;
+                availableMatches += this.#checkSum(first, second, result);
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column + 1 && secondBlock.row === block.row).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column + 1 && resultBlock.row === block.row + 1).value;
+                availableMatches += this.#checkSum(first, second, result);
+            }
+
+            // 
+            //    o--
+            //
+            if (block.column < this.TOTAL_COLUMNS - 2) {
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column + 1 && secondBlock.row === block.row).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column + 2 && resultBlock.row === block.row).value;
+                availableMatches += this.#checkSum(first, second, result);
+            }
+
+            //      |
+            //    o-
+            // 
+            //     _
+            //    |
+            //    o
+            if (block.column < this.TOTAL_COLUMNS - 1 && block.row > 0) {
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column + 1 && secondBlock.row === block.row).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column + 1 && resultBlock.row === block.row - 1).value;
+                availableMatches += this.#checkSum(first, second, result);
+                second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row - 1).value;
+                result = this.blocks.find( resultBlock => resultBlock.column === block.column + 1 && resultBlock.row === block.row - 1).value;
+                availableMatches += this.#checkSum(first, second, result);
+            }
+        });
+
+        return availableMatches;
+
+    }
+
     #isAnyMatchLeft() {
-        // TO DO
-        return true;
+        this.availableMatches = this.#getAvailableMatches();
+        return this.availableMatches > 0;
+    }
+
+    #checkSum(first, second, result) {
+        if (first + second === result) {
+            return 1;
+        }
+        return 0;
     }
 
     #createPanel() {

@@ -40,7 +40,7 @@
        x2="82.319016"
        y2="271.87668"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0434166,0,0,1.0655917,-33.838434,62.605168)" />
+       gradientTransform="matrix(3.9436218,0,0,4.0274332,-127.89329,236.61796)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -76,20 +76,13 @@
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <rect
-       style="opacity:1;fill:url(#linearGradient823);fill-opacity:1;stroke:#00808e;stroke-width:0.15762867;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+    <path
+       style="opacity:1;fill:url(#linearGradient823);fill-opacity:1;stroke:#00808e;stroke-width:0.5957619;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 0.29882812,342.81836 V 1122.2227 H 411.70117 V 342.81836 Z M 8.3320312,459.85156 H 401.66797 V 1111.1875 H 8.3320312 Z"
+       transform="scale(0.26458333)"
        id="rect815"
-       width="108.8507"
-       height="206.21738"
-       x="0.078814335"
-       y="90.703819"
-       ry="0" />
-    <rect
-       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#00808e;stroke-width:0.17605512;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect825"
-       width="104.06978"
-       height="172.33228"
-       x="2.2046943"
-       y="121.66927" />
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="95.999992"
+       inkscape:export-ydpi="95.999992" />
   </g>
 </svg>
