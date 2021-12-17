@@ -163,7 +163,6 @@ export class Game {
                     this.blocks = this.#fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS);
                 }
                 
-                console.log(this.availableMatches);
                 // After choosing three blocks the array of selected blocks is emptied
                 this.selected.forEach( block => block.selected = false );
                 this.selected = [];
