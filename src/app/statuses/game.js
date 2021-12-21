@@ -1,10 +1,16 @@
-import { Block } from './entities/block.js';
-import { Panel } from './entities/panel.js';
+import { Block } from '../entities/block.js';
+import { GamePanel } from '../entities/game-panel.js';
+import { Score } from '../entities/score.js';
+import { TimeBar } from '../entities/time-bar.js';
 
 export class Game {
+
+    GAME_OVER = 'GameOver';
     
     TOTAL_ROWS = 10;
     TOTAL_COLUMNS = 6;
+
+    MEDIUM_MATCHES = 23;
 
     MAX_BLOCK_SELECTED = 3;
 
@@ -15,16 +21,19 @@ export class Game {
     // Initialize game
     constructor(ctx) {
         // Creates the panel where the game fits
-        this.panel = this.#createPanel();
+        this.gamePanel = this.#createGamePanel();
+        // 
+        this.score = this.#createScore();
+        // 
+        this.timeBar = this.#createTimeBar();
         // Nothing has been clicked
         this.clickedX = -1;
         this.clickedY = -1;
         // Get the canvas context from parameter
         this.ctx = ctx;
         // Fill the game with blocks
-        this.blocks = this.#fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS );
+        this.blocks = this.fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS );
         this.availableMatches = this.#getAvailableMatches();
-        console.log(this.availableMatches);
         // Add a 'click' event listener to canvas that controls if any block has been clicked
         // When the player clicks inside the canvas you get x and y coords relative to the canvas context
         this.ctx.canvas.addEventListener('click', $event => {
@@ -105,7 +114,10 @@ export class Game {
                 this.blocks.forEach( block => block.available = true);
 
                 // If the first and second blocks sum the third one
-                if (this.selected[this.FIRST].value + this.selected[this.SECOND].value == this.selected[this.THIRD].value) {
+                if (this.selected[this.FIRST].value + this.selected[this.SECOND].value === this.selected[this.THIRD].value) {
+
+                    this.score.score += Number.parseInt(this.selected[this.THIRD].value * this.MEDIUM_MATCHES / this.availableMatches);
+                    this.timeBar.time = this.timeBar.INITIAL_TIME;
 
                     // It removes all three selected blocks from the total blocks array
                     this.selected.forEach( block => {
@@ -160,29 +172,28 @@ export class Game {
                 }
 
                 if (!this.#isAnyMatchLeft()) {
-                    this.blocks = this.#fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS);
+                    this.blocks = this.fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS);
+                    this.score += 1000;
                 }
-                
+
                 // After choosing three blocks the array of selected blocks is emptied
                 this.selected.forEach( block => block.selected = false );
                 this.selected = [];
-
-
             }
-            
         }
-
         this.clickedX = -1;
         this.clickedY = -1;
+        return this.timeBar.update(deltaTime);
     }
 
     draw() {
         this.blocks.forEach( block => block.draw());
-        this.panel.draw();
-
+        this.gamePanel.draw();
+        this.score.draw();
+        this.timeBar.draw();
     }
 
-    #fillGame(totalColumns, totalRows) {
+    fillGame(totalColumns, totalRows) {
 
         const result = [];
 
@@ -322,8 +333,16 @@ export class Game {
         return 0;
     }
 
-    #createPanel() {
-        return new Panel(this);
+    #createGamePanel() {
+        return new GamePanel(this);
+    }
+
+    #createScore() {
+        return new Score(this);
+    }
+
+    #createTimeBar() {
+        return new TimeBar(this);
     }
 
 }

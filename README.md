@@ -14,9 +14,8 @@ Esto abrirá el navegador predeterminado y ejecutará el juego (prototipo).
 
 # COSAS QUE QUEDAN POR HACER PARA EL PMV
 
-- Detectar y crear un panel de bloques nuevo cuando no quedan más combinaciones y añadir puntuación (Qué es un juego sin puntuaciones!!). (2 Semanas - Antes del 29 de diciembre de 2022). La puntuación está directamente relacionada con el número de combinaciones disponibles por lo que hay que resolver ambos puntos a la vez. **WIP**.
-- Añadir cuenta atrás para Game Over. (1 Semana - Antes del 5 de enero de 2022)
-- Añadir menus (2 Semanas - Antes del 19 de enero de 2022)
+- Despliegue provisional en codesandbox o netlify (1 Semana)
+- Añadir sonidos (Recuperar sonidos del primer Plusiam - 1 Semana)
 - Añadir tutorial (2 Semanas - Antes del 26 de enero de 2022)
 - Despliegue del juego en itch.io (1 Semana - Antes del 2 de febrero de 2022)
 
@@ -28,3 +27,6 @@ Esto abrirá el navegador predeterminado y ejecutará el juego (prototipo).
 
 # PUNTOS TERMINADOS
 - Se calculan las combinaciones restantes después de que el jugador complete un match.
+- Detectar y crear un panel de bloques nuevo cuando no quedan más combinaciones y añadir puntuación (Qué es un juego sin puntuaciones!!).
+- Añadir cuenta atrás para Game Over.
+- Añadir menus
