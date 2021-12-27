@@ -19,42 +19,30 @@ export class Game {
     THIRD = 2;
 
     // Initialize game
-    constructor(ctx) {
+    constructor(canvas) {
+        this.canvas = canvas;
         // Creates the panel where the game fits
         this.gamePanel = this.#createGamePanel();
         // 
         this.score = this.#createScore();
         // 
         this.timeBar = this.#createTimeBar();
-        // Nothing has been clicked
+        //
         this.clickedX = -1;
         this.clickedY = -1;
         // Get the canvas context from parameter
-        this.ctx = ctx;
+        this.ctx = canvas.getContext('2d');
         // Fill the game with blocks
         this.blocks = this.fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS );
         this.availableMatches = this.#getAvailableMatches();
-        // Add a 'click' event listener to canvas that controls if any block has been clicked
-        // When the player clicks inside the canvas you get x and y coords relative to the canvas context
-        this.ctx.canvas.addEventListener('click', $event => {
-            // This is the bounding rectangle of the canvas
-            const rect = this.ctx.canvas.getBoundingClientRect();
-            // As click event takes the x and y coord relative to the screen, we need to know where is the canvas
-            // relative to the screen.
-
-            this.clickedX = $event.x - Math.floor(rect.left);
-            //                         ^__ Amount of pixels the canvas is xTranslated from the left side of the screen
-            //              ^_ xCoord where you have clicked relative to the left side of the screen
-            this.clickedY = $event.y - Math.floor(rect.top);
-            //                         ^__ Amount of pixels the canvas is yTranslated from the top side of the screen
-            //              ^_ yCoord where you have clicked relative to the top side of the screen
-        });
         // Clicked blocks array is empty
         this.selected = [];
     }
 
     // Update the game with every frame
     update(deltaTime) {
+        this.clickedX = this.canvas.clickedX;
+        this.clickedY = this.canvas.clickedY;
         // Call the update method for each block
         this.blocks.forEach( block => block.update(deltaTime));
         
@@ -181,8 +169,6 @@ export class Game {
                 this.selected = [];
             }
         }
-        this.clickedX = -1;
-        this.clickedY = -1;
         return this.timeBar.update(deltaTime);
     }
 
