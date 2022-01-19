@@ -6,7 +6,7 @@ export class TimeBar {
     NORMAL_COLOR= 'white';
     WARNING_COLOR = 'yellow';
     CRITICAL_COLOR = 'red';
-    INITIAL_TIME = 1500;
+    INITIAL_TIME = 10000;
 
     constructor(game) {
         this.time = this.INITIAL_TIME;
