@@ -11,6 +11,7 @@ export class TimeBar {
     constructor(game) {
         this.time = this.INITIAL_TIME;
         this.game = game;
+        this.canvas = game.canvas;
         this.x = 10;
         this.y = 80;
         this.height = 10; 
@@ -22,6 +23,7 @@ export class TimeBar {
         if (this.width <= 0) {
             this.time = this.INITIAL_TIME;
             this.width = this.INITIAL_WIDTH;
+            this.canvas.finalScore = this.game.score.score;
             this.game.score.score = 0;
             this.color = this.NORMAL_COLOR;
             this.game.blocks = this.game.fillGame(this.game.TOTAL_COLUMNS, this.game.TOTAL_ROWS);

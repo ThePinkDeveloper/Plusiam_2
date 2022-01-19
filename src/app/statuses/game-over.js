@@ -12,6 +12,8 @@ export class GameOver {
         this.gameOverPanel = this.#createGameOverPanel();
         this.gameOver = this.#createTagGameOver();
         this.mainMenu = this.#createTagGoToMainMenu();
+        this.yourScore = this.#createTagYourScore();
+        this.score = this.#createTagFinalScore(canvas.finalScore)
         // Nothing has been clicked
         this.clickedX = -1
         this.clickedY = -1;
@@ -19,12 +21,12 @@ export class GameOver {
         this.ctx = canvas.getContext('2d');
         this.tags = []
         this.#fillTagArray();
-        
     }
 
     update(deltaTime) {
-        this.clickedX = ctx.canvas.clickedX;
-        this.clickedY = ctx.canvas.clickedY;
+        this.score.text = this.canvas.finalScore;
+        this.clickedX = this.ctx.canvas.clickedX;
+        this.clickedY = this.ctx.canvas.clickedY;
         if (this.clickedX != -1) {
             // It controls if you clicked inside a block and get it
             const tagClicked = this.tags.find ( tag => 
@@ -43,6 +45,8 @@ export class GameOver {
     draw() {
         this.gameOverPanel.draw();
         this.gameOver.draw();
+        this.yourScore.draw();
+        this.score.draw();
         this.mainMenu.draw();
     }
 
@@ -51,12 +55,21 @@ export class GameOver {
     }
 
     #createTagGameOver() {
-        return new Tag(this, 'Game Over', 206, 320, 50, 'white', 'center');
+        return new Tag(this, 'Game Over', 206, 300, 50, 'white', 'center');
+    }
+
+    #createTagYourScore() {
+        return new Tag(this, 'Your score is', 206, 400, 30, 'white', 'center');
+    }
+
+    #createTagFinalScore(score) {
+        return new Tag(this, `${score}`, 206, 460, 50, 'white', 'center');
     }
 
     #createTagGoToMainMenu() {
         return new Tag(this, 'Main Menu', 390, 750, 30, 'white', 'right');
     }
+
 
     #fillTagArray() {
         this.tags.push(this.gameOver, this.mainMenu);

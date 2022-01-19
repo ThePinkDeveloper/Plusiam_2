@@ -4,8 +4,6 @@ import { Score } from '../entities/score.js';
 import { TimeBar } from '../entities/time-bar.js';
 
 export class Game {
-
-    GAME_OVER = 'GameOver';
     
     TOTAL_ROWS = 10;
     TOTAL_COLUMNS = 6;
