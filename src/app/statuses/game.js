@@ -54,7 +54,7 @@ export class Game {
                 && this.clickedY < block.y + block.height);
             // If player clicked inside a block
             if (!!blockClicked) {
-                if (blockClicked.selected === false && blockClicked.available) {
+                if (!blockClicked.selected && blockClicked.available) {
                     blockClicked.selected = true;
                     this.blocks.forEach( block => block.available = false );
 
@@ -85,6 +85,7 @@ export class Game {
                     const unselectedBlock = this.selected.find( block => blockClicked.column === block.column &&
                         blockClicked.row === block.row );
                     unselectedBlock.selected = false;
+                    unselectedBlock.available = true;
                     const index = this.selected.indexOf(unselectedBlock);
                     this.selected.splice(index, 1);
                     // and if it was the last block in the selected blocks array do all blocks in the game available
@@ -100,7 +101,8 @@ export class Game {
                 this.blocks.forEach( block => block.available = true);
 
                 // If the first and second blocks sum the third one
-                if (this.selected[this.FIRST].value + this.selected[this.SECOND].value === this.selected[this.THIRD].value) {
+                if (this.selected[this.FIRST].value + this.selected[this.SECOND].value === this.selected[this.THIRD].value
+                        || this.selected[this.SECOND].value + this.selected[this.FIRST].value === this.selected[this.THIRD].value) {
 
                     this.score.score += Number.parseInt(this.selected[this.THIRD].value * this.MEDIUM_MATCHES / this.availableMatches);
                     this.timeBar.time = this.timeBar.INITIAL_TIME;

@@ -13,6 +13,9 @@ window.addEventListener('load', main);
 
 function main() {
 
+  const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+  window.requestAnimationFrame = requestAnimationFrame;
+
   const canvas = createAndConfigureCanvas();
   const ctx = canvas.getContext('2d');
   //ctx.imageSmoothingEnabled = false; //-- When active, images scaled and drawn on canvas appear pixelated
