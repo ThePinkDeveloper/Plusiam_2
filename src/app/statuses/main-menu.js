@@ -10,17 +10,17 @@ export class MainMenu {
     constructor(canvas) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        this.mainMenuPanel = this.#createMainMenuPanel();
-        this.title = this.#createTitle();
-        this.newGame = this.#createTagNewGame();
-        //this.tutorial = this.#createTagTutorial();
-        this.exit = this.#createTagExit();
+        this.mainMenuPanel = this.createMainMenuPanel();
+        this.title = this.createTitle();
+        this.newGame = this.createTagNewGame();
+        //this.tutorial = this.createTagTutorial();
+        this.exit = this.createTagExit();
         // Nothing has been clicked
         this.clickedX = -1
         this.clickedY = -1
         // Get the canvas context from parameter
         this.tags = []
-        this.#fillTagArray();
+        this.fillTagArray();
         
     }
 
@@ -51,27 +51,27 @@ export class MainMenu {
     }
 
 
-    #createMainMenuPanel() {
+    createMainMenuPanel() {
         return new GeneralPanel(this);
     }
 
-    #createTitle() {
+    createTitle() {
         return new Tag(this, 'PLUSIAM', 206, 100, 70, 'white', 'center');
     }
 
-    #createTagNewGame() {
+    createTagNewGame() {
         return new Tag(this, 'New Game', 206, 320, 50, 'white', 'center');
     }
 
-    #createTagTutorial() {
+    createTagTutorial() {
         return new Tag(this, 'Play tutorial', 206, 500, 50, 'white', 'center');
     }
 
-    #createTagExit() {
+    createTagExit() {
         return new Tag(this, 'Exit', 390, 750, 30, 'white', 'right');
     }
 
-    #fillTagArray() {
+    fillTagArray() {
         this.tags.push(this.newGame, this.exit);
     }
 }

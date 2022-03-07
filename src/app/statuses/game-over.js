@@ -9,18 +9,18 @@ export class GameOver {
     // Initialize game
     constructor(canvas) {
         this.canvas = canvas;
-        this.gameOverPanel = this.#createGameOverPanel();
-        this.gameOver = this.#createTagGameOver();
-        this.mainMenu = this.#createTagGoToMainMenu();
-        this.yourScore = this.#createTagYourScore();
-        this.score = this.#createTagFinalScore(canvas.finalScore)
+        this.gameOverPanel = this.createGameOverPanel();
+        this.gameOver = this.createTagGameOver();
+        this.mainMenu = this.createTagGoToMainMenu();
+        this.yourScore = this.createTagYourScore();
+        this.score = this.createTagFinalScore(canvas.finalScore)
         // Nothing has been clicked
         this.clickedX = -1
         this.clickedY = -1;
         // Get the canvas context from parameter
         this.ctx = canvas.getContext('2d');
         this.tags = []
-        this.#fillTagArray();
+        this.fillTagArray();
     }
 
     update(deltaTime) {
@@ -50,28 +50,28 @@ export class GameOver {
         this.mainMenu.draw();
     }
 
-    #createGameOverPanel() {
+    createGameOverPanel() {
         return new GeneralPanel(this);
     }
 
-    #createTagGameOver() {
+    createTagGameOver() {
         return new Tag(this, 'Game Over', 206, 300, 50, 'white', 'center');
     }
 
-    #createTagYourScore() {
+    createTagYourScore() {
         return new Tag(this, 'Your score is', 206, 400, 30, 'white', 'center');
     }
 
-    #createTagFinalScore(score) {
+    createTagFinalScore(score) {
         return new Tag(this, `${score}`, 206, 460, 50, 'white', 'center');
     }
 
-    #createTagGoToMainMenu() {
+    createTagGoToMainMenu() {
         return new Tag(this, 'Main Menu', 390, 750, 30, 'white', 'right');
     }
 
 
-    #fillTagArray() {
+    fillTagArray() {
         this.tags.push(this.gameOver, this.mainMenu);
     }
 }

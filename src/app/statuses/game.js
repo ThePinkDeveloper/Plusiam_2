@@ -20,11 +20,11 @@ export class Game {
     constructor(canvas) {
         this.canvas = canvas;
         // Creates the panel where the game fits
-        this.gamePanel = this.#createGamePanel();
+        this.gamePanel = this.createGamePanel();
         // 
-        this.score = this.#createScore();
+        this.score = this.createScore();
         // 
-        this.timeBar = this.#createTimeBar();
+        this.timeBar = this.createTimeBar();
         //
         this.clickedX = -1;
         this.clickedY = -1;
@@ -32,7 +32,7 @@ export class Game {
         this.ctx = canvas.getContext('2d');
         // Fill the game with blocks
         this.blocks = this.fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS );
-        this.availableMatches = this.#getAvailableMatches();
+        this.availableMatches = this.getAvailableMatches();
         // Clicked blocks array is empty
         this.selected = [];
     }
@@ -152,14 +152,14 @@ export class Game {
                                     // of blocks to the same column to fill it again.
                                     const newBlocks = new Array(numberOfBlocksToCreate);
                                     newBlocks.fill(0);
-                                    newBlocks.forEach( (value, index) => this.blocks.push(this.#createBlock(column, index)));
+                                    newBlocks.forEach( (value, index) => this.blocks.push(this.createBlock(column, index)));
 
                     });
                     
 
                 }
 
-                if (!this.#isAnyMatchLeft()) {
+                if (!this.isAnyMatchLeft()) {
                     this.blocks = this.fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS);
                     this.score += 1000;
                 }
@@ -185,18 +185,18 @@ export class Game {
 
         for (let i = 0; i < totalColumns; i++) {
             for (let j = 0; j < totalRows; j++) {
-                result.push(this.#createBlock(i, j));
+                result.push(this.createBlock(i, j));
             }
         }
 
         return result;
     }
     
-    #createBlock(column, row) {
+    createBlock(column, row) {
         return new Block(this, column, row);
     }
     
-    #getAvailableMatches() {
+    getAvailableMatches() {
 
         let availableMatches = 0;
 
@@ -212,7 +212,7 @@ export class Game {
             if (block.row > 1) {
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row - 1).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column && resultBlock.row === block.row - 2).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
             }
             
             //  _  
@@ -224,10 +224,10 @@ export class Game {
             if (block.row > 0 && block.column > 0) {
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row - 1).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column - 1 && resultBlock.row === block.row - 1).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column - 1 && secondBlock.row === block.row).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column - 1 && resultBlock.row === block.row - 1).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
             }
 
             // 
@@ -236,7 +236,7 @@ export class Game {
             if (block.column > 1) {
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column - 1 && secondBlock.row === block.row).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column - 2 && resultBlock.row === block.row).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
             }
 
             //
@@ -248,10 +248,10 @@ export class Game {
             if (block.column > 0 && block.row < this.TOTAL_ROWS - 1) {
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column - 1 && secondBlock.row === block.row).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column - 1 && resultBlock.row === block.row + 1).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row + 1).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column - 1 && resultBlock.row === block.row + 1).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
             }
 
             //    o 
@@ -260,7 +260,7 @@ export class Game {
             if (block.row < this.TOTAL_ROWS - 2) {
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row + 1).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column && resultBlock.row === block.row + 2).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
             }
 
             // 
@@ -272,10 +272,10 @@ export class Game {
             if (block.column < this.TOTAL_COLUMNS - 1 && block.row < this.TOTAL_ROWS - 1) {
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row + 1).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column + 1 && resultBlock.row === block.row + 1).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column + 1 && secondBlock.row === block.row).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column + 1 && resultBlock.row === block.row + 1).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
             }
 
             // 
@@ -284,7 +284,7 @@ export class Game {
             if (block.column < this.TOTAL_COLUMNS - 2) {
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column + 1 && secondBlock.row === block.row).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column + 2 && resultBlock.row === block.row).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
             }
 
             //      |
@@ -296,10 +296,10 @@ export class Game {
             if (block.column < this.TOTAL_COLUMNS - 1 && block.row > 0) {
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column + 1 && secondBlock.row === block.row).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column + 1 && resultBlock.row === block.row - 1).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
                 second = this.blocks.find( secondBlock => secondBlock.column === block.column && secondBlock.row === block.row - 1).value;
                 result = this.blocks.find( resultBlock => resultBlock.column === block.column + 1 && resultBlock.row === block.row - 1).value;
-                availableMatches += this.#checkSum(first, second, result);
+                availableMatches += this.checkSum(first, second, result);
             }
         });
 
@@ -307,27 +307,27 @@ export class Game {
 
     }
 
-    #isAnyMatchLeft() {
-        this.availableMatches = this.#getAvailableMatches();
+    isAnyMatchLeft() {
+        this.availableMatches = this.getAvailableMatches();
         return this.availableMatches > 0;
     }
 
-    #checkSum(first, second, result) {
+    checkSum(first, second, result) {
         if (first + second === result) {
             return 1;
         }
         return 0;
     }
 
-    #createGamePanel() {
+    createGamePanel() {
         return new GamePanel(this);
     }
 
-    #createScore() {
+    createScore() {
         return new Score(this);
     }
 
-    #createTimeBar() {
+    createTimeBar() {
         return new TimeBar(this);
     }
 
