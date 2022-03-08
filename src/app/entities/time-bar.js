@@ -29,7 +29,8 @@ export class TimeBar {
             this.game.blocks = this.game.fillGame(this.game.TOTAL_COLUMNS, this.game.TOTAL_ROWS);
             return this.GAMEOVER;
         }
-        this.time = this.time - Number.parseInt(deltaTime * this.game.score.score / 1000);
+        const timeReducer = this.game.score.score < 1000 ? this.game.score.score : 1000;
+        this.time = this.time - Number.parseInt(deltaTime * timeReducer / 1000);
         this.width = this.time / this.INITIAL_TIME * this.INITIAL_WIDTH;
         if (this.width > this.INITIAL_WIDTH / 2) {
             this.color = this.NORMAL_COLOR;

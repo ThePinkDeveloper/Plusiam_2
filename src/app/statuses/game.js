@@ -161,7 +161,8 @@ export class Game {
 
                 if (!this.isAnyMatchLeft()) {
                     this.blocks = this.fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS);
-                    this.score += 1000;
+                    this.score.score += 1000;
+                    this.timeBar.time = this.timeBar.INITIAL_TIME;
                 }
 
                 // After choosing three blocks the array of selected blocks is emptied
