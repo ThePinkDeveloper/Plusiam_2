@@ -104,7 +104,7 @@ export class Game {
                 if (this.selected[this.FIRST].value + this.selected[this.SECOND].value === this.selected[this.THIRD].value
                         || this.selected[this.SECOND].value + this.selected[this.FIRST].value === this.selected[this.THIRD].value) {
 
-                    this.score.score += Number.parseInt(this.selected[this.THIRD].value * this.MEDIUM_MATCHES / this.availableMatches);
+                    this.score.score += Number.parseInt(this.selected[this.THIRD].value * this.MEDIUM_MATCHES / ((this.availableMatches === 0) ? 1 : this.availableMatches));
                     this.timeBar.time = this.timeBar.INITIAL_TIME;
 
                     // It removes all three selected blocks from the total blocks array
