@@ -1,10 +1,8 @@
+import { Constants } from '../constants.js';
 import { GeneralPanel } from '../entities/general-panel.js';
 import { Tag } from '../entities/tag.js';
 
 export class MainMenu {
-
-    GAMEON = 'GameOn';
-    MAINMENU = 'MainMenu';
 
     // Initialize game
     constructor(canvas) {
@@ -21,11 +19,10 @@ export class MainMenu {
         // Nothing has been clicked
         this.clickedX = -1
         this.clickedY = -1
-        // Get the canvas context from parameter
         this.tags = []
         this.fillTagArray();
         this.sound = this.loadMusic();
-        
+        this.nextSceneKey = Constants.MAINMENU; 
     }
 
     update(deltaTime) {
@@ -40,7 +37,7 @@ export class MainMenu {
                 && this.clickedY > tag.y - tag.height);
             
             if (!!tagClicked) {
-                return this.GAMEON;
+                this.nextSceneKey = Constants.GAMEON;
             }
             
             // It controls if you clicked inside the sound icon
@@ -59,7 +56,6 @@ export class MainMenu {
             this.sound.pause();
         }
 
-        return this.MAINMENU;
     }
 
     draw() {
@@ -69,6 +65,10 @@ export class MainMenu {
         //this.tutorial.draw();
         this.drawSoundIcon();
         this.exit.draw();
+    }
+
+    getNextSceneKey() {
+        return this.nextSceneKey;
     }
 
 

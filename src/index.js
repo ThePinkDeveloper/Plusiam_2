@@ -1,53 +1,44 @@
-import { Game } from './app/statuses/game.js';
-import { MainMenu } from './app/statuses/main-menu.js';
-import { GameOver } from './app/statuses/game-over.js';
+import { Constants } from './app/constants.js';
+import { Game } from './app/scenes/game.js';
+import { MainMenu } from './app/scenes/main-menu.js';
+import { GameOver } from './app/scenes/game-over.js';
 
-const GAMEOVER = 'GameOver';
-const GAMEON = 'GameOn';
-const MAINMENU = 'MainMenu';
+const canvas = createAndConfigureCanvas();
+const ctx = canvas.getContext('2d');
+//ctx.imageSmoothingEnabled = false; //-- When active, images scaled and drawn on canvas appear pixelated
 
-const GAME_WIDTH = 412;
-const GAME_HEIGHT = 780;
+const stage = new Map();
+stage.set(Constants.MAINMENU, new MainMenu(canvas));
+stage.set(Constants.GAMEON, new Game(canvas));
+stage.set(Constants.GAMEOVER, new GameOver(canvas));
+let currentSceneKey = Constants.MAINMENU;
+
+let lastTime = 0;
 
 window.addEventListener('load', main);
 
-function main() {
+function main() {  
+  animate(currentSceneKey, 0);  
+}
 
-  const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
-  window.requestAnimationFrame = requestAnimationFrame;
+function animate(timeStamp) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const deltaTime = timeStamp - lastTime;
+  lastTime = timeStamp;
+  stage.get(currentSceneKey).update(deltaTime);
+  stage.get(currentSceneKey).draw();
+  currentSceneKey = stage.get(currentSceneKey).getNextSceneKey();
 
-  const canvas = createAndConfigureCanvas();
-  const ctx = canvas.getContext('2d');
-  //ctx.imageSmoothingEnabled = false; //-- When active, images scaled and drawn on canvas appear pixelated
-
-  let lastTime = 1;
-  let key = MAINMENU;
-
-  const statusesMachine = new Map();
-  statusesMachine.set(MAINMENU, new MainMenu(canvas));
-  statusesMachine.set(GAMEON, new Game(canvas));
-  statusesMachine.set(GAMEOVER, new GameOver(canvas));
-
-  function animate(timeStamp) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const deltaTime = timeStamp - lastTime;
-    lastTime = timeStamp;
-    key = statusesMachine.get(key).update(deltaTime);
-    statusesMachine.get(key).draw();
-    canvas.clickedX = -1;
-    canvas.clickedY = -1;
-    requestAnimationFrame(animate);
-  }
-
-  animate(0);
-
+  canvas.clickedX = -1;
+  canvas.clickedY = -1;
+  window.requestAnimationFrame(animate);
 }
 
 function createAndConfigureCanvas() {
     
   const mycanvas = document.getElementById('canvas1');
-  mycanvas.width = GAME_WIDTH;
-  mycanvas.height = GAME_HEIGHT;
+  mycanvas.width = Constants.GAME_WIDTH;
+  mycanvas.height = Constants.GAME_HEIGHT;
   mycanvas.clickedX = -1;
   mycanvas.clickedY = -1;
   // Add a 'click' event listener to canvas.
@@ -101,10 +92,10 @@ function createAndConfigureCanvas() {
   return mycanvas;
 }
 
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
+// function sleep(milliseconds) {
+//   const date = Date.now();
+//   let currentDate = null;
+//   do {
+//     currentDate = Date.now();
+//   } while (currentDate - date < milliseconds);
+// }
