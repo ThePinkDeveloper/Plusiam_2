@@ -1,6 +1,7 @@
 import { Constants } from '../constants.js';
 import { GeneralPanel } from '../entities/general-panel.js';
 import { Tag } from '../entities/tag.js';
+import { Lang } from '../lang/lang.js';
 
 export class MainMenu {
 
@@ -89,7 +90,7 @@ export class MainMenu {
     }
 
     createTagNewGame() {
-        return new Tag(this, 'New Game', 206, 370, 50, 'white', 'center');
+        return new Tag(this, Lang.browserLang.main_menu.new_game, 206, 370, 50, 'white', 'center');
     }
 
     createTagTutorial() {
@@ -97,7 +98,7 @@ export class MainMenu {
     }
 
     createTagExit() {
-        return new Tag(this, 'Exit', 390, 750, 30, 'white', 'right');
+        return new Tag(this, Lang.browserLang.main_menu.exit, 390, 750, 30, 'white', 'right');
     }
 
     fillTagArray() {
