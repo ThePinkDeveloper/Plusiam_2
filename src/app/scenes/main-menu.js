@@ -74,7 +74,7 @@ export class MainMenu {
 
 
     createMainMenuPanel() {
-        return new GeneralPanel(this);
+        return new GeneralPanel(this.canvas);
     }
 
     drawTitle() {

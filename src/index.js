@@ -9,8 +9,8 @@ const ctx = canvas.getContext('2d');
 
 const stage = new Map();
 stage.set(Constants.MAINMENU, new MainMenu(canvas));
-stage.set(Constants.GAMEON, new Game(canvas));
-stage.set(Constants.GAMEOVER, new GameOver(canvas));
+// stage.set(Constants.GAMEON, new Game(canvas));
+// stage.set(Constants.GAMEOVER, new GameOver(canvas));
 let currentSceneKey = Constants.MAINMENU;
 
 let lastTime = 0;
