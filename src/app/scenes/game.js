@@ -2,6 +2,7 @@ import { Block } from '../entities/block.js';
 import { GamePanel } from '../entities/game-panel.js';
 import { Score } from '../entities/score.js';
 import { TimeBar } from '../entities/time-bar.js';
+import { Constants } from '../constants.js';
 
 export class Game {
     
@@ -35,6 +36,7 @@ export class Game {
         this.availableMatches = this.getAvailableMatches();
         // Clicked blocks array is empty
         this.selected = [];
+        this.nextSceneKey = Constants.GAMEON; 
     }
 
     // Update the game with every frame
@@ -105,7 +107,7 @@ export class Game {
                         || this.selected[this.SECOND].value + this.selected[this.FIRST].value === this.selected[this.THIRD].value) {
 
                     this.score.score += Number.parseInt(this.selected[this.THIRD].value * this.MEDIUM_MATCHES / ((this.availableMatches === 0) ? 1 : this.availableMatches));
-                    this.timeBar.time = this.timeBar.INITIAL_TIME;
+                    this.timeBar.time = Constants.INITIAL_TIME;
 
                     // It removes all three selected blocks from the total blocks array
                     this.selected.forEach( block => {
@@ -162,7 +164,7 @@ export class Game {
                 if (!this.isAnyMatchLeft()) {
                     this.blocks = this.fillGame(this.TOTAL_COLUMNS, this.TOTAL_ROWS);
                     this.score.score += 1000;
-                    this.timeBar.time = this.timeBar.INITIAL_TIME;
+                    this.timeBar.time = Constants.INITIAL_TIME;
                 }
 
                 // After choosing three blocks the array of selected blocks is emptied
@@ -170,7 +172,8 @@ export class Game {
                 this.selected = [];
             }
         }
-        return this.timeBar.update(deltaTime);
+        
+        this.nextSceneKey = this.timeBar.update(deltaTime);
     }
 
     draw() {
@@ -330,6 +333,10 @@ export class Game {
 
     createTimeBar() {
         return new TimeBar(this);
+    }
+
+    getNextSceneKey() {
+        return this.nextSceneKey;
     }
 
 }

@@ -1,10 +1,9 @@
 import { GeneralPanel } from '../entities/general-panel.js';
 import { Tag } from '../entities/tag.js';
+import { Constants } from '../constants.js';
+import lang from '../lang/lang.js';
 
 export class GameOver {
-
-    GAMEOVER = 'GameOver';
-    MAINMENU = 'MainMenu';
 
     // Initialize game
     constructor(canvas) {
@@ -21,6 +20,7 @@ export class GameOver {
         this.ctx = canvas.getContext('2d');
         this.tags = []
         this.fillTagArray();
+        this.nextSceneKey = Constants.GAMEOVER
     }
 
     update(deltaTime) {
@@ -36,10 +36,10 @@ export class GameOver {
                 && this.clickedY > tag.y - tag.height);
             
             if (!!tagClicked) {
-                return this.MAINMENU;
+                this.nextSceneKey = Constants.MAINMENU;
             }
         }
-        return this.GAMEOVER;
+        this.nextSceneKey = Constants.GAMEOVER;
     }
 
     draw() {
@@ -51,7 +51,7 @@ export class GameOver {
     }
 
     createGameOverPanel() {
-        return new GeneralPanel(this);
+        return new GeneralPanel(this.canvas);
     }
 
     createTagGameOver() {
@@ -59,7 +59,7 @@ export class GameOver {
     }
 
     createTagYourScore() {
-        return new Tag(this, 'Your score is', 206, 400, 30, 'white', 'center');
+        return new Tag(this, lang.game_over.your_score, 206, 400, 30, 'white', 'center');
     }
 
     createTagFinalScore(score) {
@@ -67,11 +67,14 @@ export class GameOver {
     }
 
     createTagGoToMainMenu() {
-        return new Tag(this, 'Main Menu', 390, 750, 30, 'white', 'right');
+        return new Tag(this, lang.game_over.main_menu, 390, 750, 30, 'white', 'right');
     }
-
 
     fillTagArray() {
         this.tags.push(this.gameOver, this.mainMenu);
+    }
+
+    getNextSceneKey() {
+        return this.nextSceneKey;
     }
 }

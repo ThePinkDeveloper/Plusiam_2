@@ -9,8 +9,8 @@ const ctx = canvas.getContext('2d');
 
 const stage = new Map();
 stage.set(Constants.MAINMENU, new MainMenu(canvas));
-// stage.set(Constants.GAMEON, new Game(canvas));
-// stage.set(Constants.GAMEOVER, new GameOver(canvas));
+stage.set(Constants.GAMEON, new Game(canvas));
+stage.set(Constants.GAMEOVER, new GameOver(canvas));
 let currentSceneKey = Constants.MAINMENU;
 
 let lastTime = 0;
@@ -48,10 +48,10 @@ function createAndConfigureCanvas() {
     const rect = mycanvas.getBoundingClientRect();
     // As click event takes the x and y coord relative to the screen, we need to know where is the canvas
     // relative to the screen.
-    mycanvas.clickedX = Math.floor(($event.x - rect.left) * GAME_WIDTH / mycanvas.clientWidth);
+    mycanvas.clickedX = Math.floor(($event.x - rect.left) * Constants.GAME_WIDTH / mycanvas.clientWidth);
     //                         ^__ Amount of pixels the canvas is xTranslated from the left side of the screen
     //              ^_ xCoord where you have clicked relative to the left side of the screen
-    mycanvas.clickedY = Math.floor(($event.y - rect.top) * GAME_HEIGHT / mycanvas.clientHeight);
+    mycanvas.clickedY = Math.floor(($event.y - rect.top) * Constants.GAME_HEIGHT / mycanvas.clientHeight);
     //                         ^__ Amount of pixels the canvas is yTranslated from the top side of the screen
     //              ^_ yCoord where you have clicked relative to the top side of the screen
   });

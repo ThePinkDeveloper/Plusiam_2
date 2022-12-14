@@ -7,4 +7,12 @@ export class Constants {
 	static GAME_WIDTH = 412;
 	static GAME_HEIGHT = 780;
 
+	static BAR_INITIAL_WIDTH = 392;
+
+    static BAR_NORMAL_COLOR= 'white';
+    static BAR_WARNING_COLOR = 'yellow';
+    static BAR_CRITICAL_COLOR = 'red';
+    
+	static INITIAL_TIME = 10000;
+
 }
