@@ -33,7 +33,7 @@ export class TimeBar {
             this.stage.set(Constants.GAMEOVER, new GameOver(this.canvas, this.stage));
             return Constants.GAMEOVER;
         }
-        const timeReducer = 1000; //this.game.score.score < 1000 ? this.game.score.score : 1000;
+        const timeReducer = this.game.score.score < 1000 ? this.game.score.score : 1000;
         this.time = this.time - Number.parseInt(deltaTime * timeReducer / 1000);
         this.width = this.time / Constants.INITIAL_TIME * Constants.BAR_INITIAL_WIDTH;
         if (this.width > Constants.BAR_INITIAL_WIDTH / 2) {
