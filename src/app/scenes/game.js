@@ -18,8 +18,9 @@ export class Game {
     THIRD = 2;
 
     // Initialize game
-    constructor(canvas) {
+    constructor(canvas, stage) {
         this.canvas = canvas;
+        this.stage = stage;
         // Creates the panel where the game fits
         this.gamePanel = this.createGamePanel();
         // 
@@ -36,7 +37,7 @@ export class Game {
         this.availableMatches = this.getAvailableMatches();
         // Clicked blocks array is empty
         this.selected = [];
-        this.nextSceneKey = Constants.GAMEON; 
+        this.nextSceneKey = Constants.GAMEON;
     }
 
     // Update the game with every frame
@@ -58,6 +59,7 @@ export class Game {
             if (!!blockClicked) {
                 if (!blockClicked.selected && blockClicked.available) {
                     blockClicked.selected = true;
+                    Constants.playSound('select');
                     this.blocks.forEach( block => block.available = false );
 
                     // It paints for availability all available blocks to be clicked
@@ -83,6 +85,7 @@ export class Game {
                 
                 // If it is unselected
                 } else if (blockClicked.selected === true) {
+                    Constants.playSound('unselect');
                     // Remove the unselected block from the selected blocks array
                     const unselectedBlock = this.selected.find( block => blockClicked.column === block.column &&
                         blockClicked.row === block.row );
@@ -108,6 +111,7 @@ export class Game {
 
                     this.score.score += Number.parseInt(this.selected[this.THIRD].value * this.MEDIUM_MATCHES / ((this.availableMatches === 0) ? 1 : this.availableMatches));
                     this.timeBar.time = Constants.INITIAL_TIME;
+                    Constants.playSound('match');
 
                     // It removes all three selected blocks from the total blocks array
                     this.selected.forEach( block => {
@@ -332,7 +336,7 @@ export class Game {
     }
 
     createTimeBar() {
-        return new TimeBar(this);
+        return new TimeBar(this, this.stage);
     }
 
     getNextSceneKey() {

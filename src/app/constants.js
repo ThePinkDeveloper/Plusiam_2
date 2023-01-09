@@ -15,4 +15,13 @@ export class Constants {
     
 	static INITIAL_TIME = 10000;
 
+	static SOUND_ENABLED = false;
+
+	static playSound(soundName) {
+		if (Constants.SOUND_ENABLED) {
+			new Audio(`../../assets/sounds/${soundName}.ogg`).play();
+
+		}
+	}
+
 }

@@ -12,9 +12,14 @@ http-server -o
 
 Esto abrirá el navegador predeterminado y ejecutará el juego (prototipo).
 
+# AÑADIDO EN ESTA ACTUALIZACION
+
+- Se añaden sonidos
+- Se arregla un bug por el que había que recargar la página para poder jugar desde la pantalla de Game Over ( Gracias Tere y Sergi por reportarlo ;) )
+- Arreglo de bugs menores
+
 # COSAS QUE QUEDAN POR HACER PARA EL MVP
 
-- Añadir sonidos
 - Añadir tutorial
 - Modo ZEN (Misma mecánica sin limete de tiempo, sacar combinaciones por placer)
 - Despliegue del juego en producción

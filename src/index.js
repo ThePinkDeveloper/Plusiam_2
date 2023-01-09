@@ -8,9 +8,9 @@ const ctx = canvas.getContext('2d');
 //ctx.imageSmoothingEnabled = false; //-- When active, images scaled and drawn on canvas appear pixelated
 
 const stage = new Map();
-stage.set(Constants.MAINMENU, new MainMenu(canvas));
-stage.set(Constants.GAMEON, new Game(canvas));
-stage.set(Constants.GAMEOVER, new GameOver(canvas));
+stage.set(Constants.MAINMENU, new MainMenu(canvas, stage));
+stage.set(Constants.GAMEOVER, new GameOver(canvas, stage));
+stage.set(Constants.GAMEON, new Game(canvas, stage));
 let currentSceneKey = Constants.MAINMENU;
 
 let lastTime = 0;

@@ -1,4 +1,5 @@
 import { GeneralPanel } from '../entities/general-panel.js';
+import { MainMenu } from '../scenes/main-menu.js';
 import { Tag } from '../entities/tag.js';
 import { Constants } from '../constants.js';
 import lang from '../lang/lang.js';
@@ -6,8 +7,9 @@ import lang from '../lang/lang.js';
 export class GameOver {
 
     // Initialize game
-    constructor(canvas) {
+    constructor(canvas, stage) {
         this.canvas = canvas;
+        this.stage = stage;
         this.gameOverPanel = this.createGameOverPanel();
         this.gameOver = this.createTagGameOver();
         this.mainMenu = this.createTagGoToMainMenu();
@@ -28,18 +30,24 @@ export class GameOver {
         this.clickedX = this.ctx.canvas.clickedX;
         this.clickedY = this.ctx.canvas.clickedY;
         if (this.clickedX != -1) {
-            // It controls if you clicked inside a block and get it
+            // It controls if you clicked inside a tag and get it
             const tagClicked = this.tags.find ( tag => 
-                    this.clickedX > tag.x - tag.width / 2 
-                && this.clickedX < tag.x + tag.width / 2
-                && this.clickedY < tag.y 
-                && this.clickedY > tag.y - tag.height);
+                   this.clickedX > tag.x - tag.width
+                && this.clickedX < tag.x
+                && this.clickedY > tag.y - tag.height 
+                && this.clickedY < tag.y);
             
-            if (!!tagClicked) {
+            if (!!tagClicked && tagClicked.text === lang.game_over.main_menu) {
+                const mainMenu = this.stage.get(Constants.MAINMENU);
+                const newMainMenu = new MainMenu(this.canvas, this.stage);
+                newMainMenu.soundEnabled = mainMenu.soundEnabled;
+                this.stage.set(Constants.MAINMENU, newMainMenu);
                 this.nextSceneKey = Constants.MAINMENU;
+                Constants.playSound('select');
             }
+        } else {
+            this.nextSceneKey = Constants.GAMEOVER;
         }
-        this.nextSceneKey = Constants.GAMEOVER;
     }
 
     draw() {
