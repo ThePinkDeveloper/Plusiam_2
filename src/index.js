@@ -17,7 +17,8 @@ let lastTime = 0;
 
 window.addEventListener('load', main);
 
-function main() {  
+function main() {
+  Constants.loadSounds();
   animate(currentSceneKey, 0);  
 }
 

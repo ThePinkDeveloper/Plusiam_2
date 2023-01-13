@@ -14,6 +14,10 @@ Esto abrirá el navegador predeterminado y ejecutará el juego (prototipo).
 
 # AÑADIDO EN ESTA ACTUALIZACION
 
+Se corrige un bug por el que producía una desinsocrización en los sonidos al cargarse estos cada vez que se producía un sonido. Ahora todos los sonidos se cargan en memoria antes de usarse.
+
+# AÑADIDO EN ACTUALIZACIONES ANTERIORES
+
 - Se añaden sonidos
 - Se arregla un bug por el que había que recargar la página para poder jugar desde la pantalla de Game Over ( Gracias Tere y Sergi por reportarlo ;) )
 - Arreglo de bugs menores
