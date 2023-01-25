@@ -3,6 +3,7 @@ import { GeneralPanel } from '../entities/general-panel.js';
 import { Game } from './game.js'
 import { Tag } from '../entities/tag.js';
 import { SoundSwitch } from '../entities/sound-switch.js';
+import { Tutorial } from './tutorial.js';
 import lang from '../lang/lang.js';
 
 export class MainMenu {
@@ -13,9 +14,9 @@ export class MainMenu {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.mainMenuPanel = this.createMainMenuPanel();
-        this.titleImage = document.getElementById('titleImage');
-        this.newGame = this.createTagNewGame();
-        //this.tutorial = this.createTagTutorial();
+        this.tagPlusiam = this.createTagPlusiam();
+        this.newGame = this.createTagNewGame()
+        this.tutorial = this.createTagTutorial();
         this.exit = this.createTagExit();
         this.tagSound = this.createTagSound();
         this.tagOn = this.createTagOn();
@@ -34,6 +35,7 @@ export class MainMenu {
     update(deltaTime) {
         this.clickedX = this.canvas.clickedX;
         this.clickedY = this.canvas.clickedY;
+        this.nextSceneKey = Constants.MAINMENU;
         if (this.clickedX != -1) {
             // It controls if you clicked inside a tag and get it
             const tagClicked = this.tags.find ( tag => 
@@ -48,6 +50,10 @@ export class MainMenu {
                     this.stage.set(Constants.GAMEON, new Game(this.canvas, this.stage));
                     this.nextSceneKey = Constants.GAMEON;
                 }
+                if (tagClicked.text === lang.main_menu.tutorial) {
+                    this.stage.set(Constants.TUTORIAL, new Tutorial(this.canvas, this.stage));
+                    this.nextSceneKey = Constants.TUTORIAL;
+                }
                 if (tagClicked.text === lang.main_menu.exit) {
                     window.location.href = "https://google.es";
                 }
@@ -57,14 +63,13 @@ export class MainMenu {
             this.soundSwitch.update(this);
             
         }
-
     }
 
     draw() {
         this.mainMenuPanel.draw();
-        this.drawTitle();
+        this.tagPlusiam.draw();
         this.newGame.draw();
-        //this.tutorial.draw();
+        this.tutorial.draw();
         this.soundSwitch.draw();
         this.tagSound.draw();
         this.tagOn.draw();
@@ -84,16 +89,17 @@ export class MainMenu {
         return new SoundSwitch(this.canvas);
     }
 
-    drawTitle() {
-        this.ctx.drawImage(this.titleImage, 0, 0, this.titleImage.width, this.titleImage.height, 60, 120 + 30 * Math.sin(this.increment += .05), 300, 80);
+    createTagPlusiam() {
+        return new Tag(this, 'Plusiam', 206, 170, 70, 'white', 'center');
     }
+    
 
     createTagNewGame() {
         return new Tag(this, lang.main_menu.new_game, 206, 370, 50, 'white', 'center');
     }
 
     createTagTutorial() {
-        return new Tag(this, 'Play tutorial', 206, 500, 50, 'white', 'center');
+        return new Tag(this, lang.main_menu.tutorial, 206, 500, 50, 'white', 'center');
     }
 
     createTagExit() {
@@ -113,6 +119,6 @@ export class MainMenu {
     }
 
     fillTagArray() {
-        this.tags.push(this.newGame, this.exit);
+        this.tags.push(this.newGame, this.tutorial, this.exit);
     }
 }

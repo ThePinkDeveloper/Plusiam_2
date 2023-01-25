@@ -1,6 +1,6 @@
 export class Tag {
 
-    constructor(menu, text, x, y, size, color, align, clickable) {
+    constructor(menu, text, x, y, size, color, align, clickable, effect, counter) {
         this.menu = menu;
         this.size = size;
         this.text = text;
@@ -11,11 +11,26 @@ export class Tag {
         this.color = color;
         this.align = align;
         this.clickable = clickable == true ? clickable : false;
+        this.effect = effect;
+        this.counter = counter;
+        this.alpha = 0;
     }
 
     draw() {
         this.menu.ctx.textAlign = this.align;
-        this.menu.ctx.fillStyle = this.color;
+        if (this.effect === 'fadein') {
+            this.alpha = this.counter / 100;
+            if (!this.counter || this.counter < 0 ) {
+                this.alpha = 0;
+            }
+            if (this.counter > 255) {
+                this.alpha = 1;
+            }
+            this.menu.ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+            this.counter = this.counter + 1;
+        } else {
+            this.menu.ctx.fillStyle = this.color;
+        }
         this.menu.ctx.font = `italic ${this.size}px Arial`;
         this.width = Number.parseInt(this.menu.ctx.measureText(this.text).width);
 
